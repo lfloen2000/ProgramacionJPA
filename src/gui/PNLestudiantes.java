@@ -48,7 +48,7 @@ public class PNLestudiantes extends JPanel {
 	private JTextField direccion;
 	private JTextField email;
 	private JTextField telefono;
-	private JComboBox<Tipologiasexo> jcbSexo;
+	JComboBox<Tipologiasexo> jcbSexo;
 	private JTextField jtfColor = new JTextField();
 	JButton jbtSeleccionar = new JButton ("Seleccionar color");
 	JPanel jpPanelParaColorear = new JPanel();
@@ -240,7 +240,7 @@ public class PNLestudiantes extends JPanel {
 		telefono.setColumns(10);
 
 		
-		this.actual = ControladorEstudiantes.getInstance().findPrimero();
+		this.actual = ControladorEstudiantes.getInstancia().findPrimero();
 		
 		JLabel lblNewLabel_8 = new JLabel("Color favorito");
 		GridBagConstraints gbc_lblNewLabel_8 = new GridBagConstraints();
@@ -285,7 +285,7 @@ public class PNLestudiantes extends JPanel {
 		JButton btnPrimero = new JButton("<<");
 		btnPrimero.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actual = ControladorEstudiantes.getInstance().findPrimero();
+				actual = ControladorEstudiantes.getInstancia().findPrimero();
 				cargarActualEnPantalla();
 			}
 		});
@@ -294,7 +294,7 @@ public class PNLestudiantes extends JPanel {
 		JButton btnAnterior = new JButton("<");
 		btnAnterior.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actual = ControladorEstudiantes.getInstance().findAnterior(actual.getId());
+				actual = ControladorEstudiantes.getInstancia().findAnterior(actual.getId());
 				cargarActualEnPantalla();
 			}
 		});
@@ -303,7 +303,7 @@ public class PNLestudiantes extends JPanel {
 		JButton btnSiguiente = new JButton(">");
 		btnSiguiente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actual = ControladorEstudiantes.getInstance().findSiguiente(actual.getId());
+				actual = ControladorEstudiantes.getInstancia().findSiguiente(actual.getId());
 				cargarActualEnPantalla();
 			}
 		});
@@ -312,7 +312,7 @@ public class PNLestudiantes extends JPanel {
 		JButton btnUltimo = new JButton(">>");
 		btnUltimo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				actual = ControladorEstudiantes.getInstance().findUltimo();
+				actual = ControladorEstudiantes.getInstancia().findUltimo();
 				cargarActualEnPantalla();
 			}
 		});
@@ -407,7 +407,7 @@ public class PNLestudiantes extends JPanel {
 		cargarActualDesdePantalla();
 		// Decido si se trata de guardar un registro existente o nuevo
 		if (this.actual.getId() != 0) { // Modificación
-			if (ControladorEstudiantes.getInstance().guardar(this.actual) == true) {
+			if (ControladorEstudiantes.getInstancia().guardar(this.actual) == true) {
 				JOptionPane.showMessageDialog(null, "Registro modificado correctamente");
 			}
 			else {

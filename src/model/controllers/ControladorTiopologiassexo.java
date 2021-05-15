@@ -1,14 +1,11 @@
 package model.controllers;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
@@ -17,10 +14,11 @@ import model.Tipologiasexo;
 
 public class ControladorTiopologiassexo {
 
-private static ControladorTiopologiassexo instance = null;
-public Connection conn = null;
-	
 	EntityManagerFactory factory = Persistence.createEntityManagerFactory("CentroeducativoJPA");
+	
+private static ControladorTiopologiassexo instance = null;
+	
+
 	
 	/**
 	 * 
@@ -38,13 +36,7 @@ public Connection conn = null;
 	 */
 	public ControladorTiopologiassexo() {
 		
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			conn = (Connection) DriverManager.getConnection ("jdbc:mysql://localhost/centroeducativo?serverTimezone=UTC","educacion", "1234");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		   
+	   
 
 	}
 	
@@ -140,24 +132,19 @@ public Connection conn = null;
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Tipologiasexo> findAll() {
-		List<Tipologiasexo> tipos = new ArrayList<Tipologiasexo>();
+		List<Tipologiasexo> resultado = new ArrayList<Tipologiasexo>();
 		try {
-			Statement s = this.conn.createStatement();
-			ResultSet rs =  s.executeQuery("select * from centroeducativo.Tipologiasexo");
-			while (rs.next()) {
-				Tipologiasexo tip = new Tipologiasexo();
-				tip.setId(rs.getInt("id"));
-				tip.setDescripcion(rs.getString("descripcion"));
-				
-				// Agrego el fabricante a la lista
-				tipos.add(tip);
-			}
+			EntityManager em = this.factory.createEntityManager();
+			Query q = em.createQuery("SELECT o FROM Tipologiasexo o", Tipologiasexo.class);
+			resultado = (List<Tipologiasexo>) q.getResultList();
+			em.close();
+			return resultado;
 		}
-		catch (Exception ex) {
-			ex.printStackTrace();
+		catch (NoResultException nrEx) {
+			return null;
 		}
-		return tipos;
 		
 	}
 	

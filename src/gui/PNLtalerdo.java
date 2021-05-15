@@ -261,7 +261,7 @@ public class PNLtalerdo extends JPanel {
 		JButton btnPrimero = new JButton("<<");
 				btnPrimero.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						actual = ControladorProfesores.getInstance().findPrimero();
+						actual = ControladorProfesores.getInstancia().findPrimero();
 						cargarActualEnPantalla();
 					}
 				});
@@ -270,7 +270,7 @@ public class PNLtalerdo extends JPanel {
 				JButton btnAnterior = new JButton("<");
 						btnAnterior.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) {
-								actual = ControladorProfesores.getInstance().findAnterior(actual.getId());
+								actual = ControladorProfesores.getInstancia().findAnterior(actual.getId());
 								cargarActualEnPantalla();
 							}
 						});
@@ -279,7 +279,7 @@ public class PNLtalerdo extends JPanel {
 						JButton btnSiguiente = new JButton(">");
 								btnSiguiente.addActionListener(new ActionListener() {
 									public void actionPerformed(ActionEvent e) {
-										actual = ControladorProfesores.getInstance().findSiguiente(actual.getId());
+										actual = ControladorProfesores.getInstancia().findSiguiente(actual.getId());
 										cargarActualEnPantalla();
 									}
 								});
@@ -288,7 +288,7 @@ public class PNLtalerdo extends JPanel {
 								JButton btnUltimo = new JButton(">>");
 										btnUltimo.addActionListener(new ActionListener() {
 											public void actionPerformed(ActionEvent e) {
-												actual = ControladorProfesores.getInstance().findUltimo();
+												actual = ControladorProfesores.getInstancia().findUltimo();
 												cargarActualEnPantalla();
 											}
 										});
@@ -309,7 +309,7 @@ public class PNLtalerdo extends JPanel {
 										panel.add(btnEliminar);
 
 		
-		this.actual = ControladorProfesores.getInstance().findPrimero();
+		this.actual = ControladorProfesores.getInstancia().findPrimero();
 		
 		cargarTipologiasSexo();
 		
@@ -360,7 +360,7 @@ public class PNLtalerdo extends JPanel {
 		cargarActualEnPantalla();
 		// Decido si se trata de guardar un registro existente o nuevo
 		if (this.actual.getId() != 0) { // Modificación
-			if (ControladorProfesores.getInstance().guardar(this.actual) == true) {
+			if (ControladorProfesores.getInstancia().guardar(this.actual) == true) {
 				JOptionPane.showMessageDialog(null, "Registro modificado correctamente");
 			}
 			else {

@@ -5,6 +5,8 @@ import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 
 
@@ -13,6 +15,21 @@ public class Principal extends JFrame {
 private JTabbedPane jTabbedPane = null;
 	
 	private static Principal instance = null;
+	
+	{
+		try {
+			// Look and Feel Windows - S�lo en entornos Windows
+			UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		} 
+	}
 	
 	/**
 	 * 
@@ -29,13 +46,12 @@ private JTabbedPane jTabbedPane = null;
 	 * 
 	 */
 	public Principal() {
-		super("Gestión de centro educativo");
+		super("Gestión de venta de coches");
 		this.setBounds(0, 0, 600, 400);
-		
-//		this.setJMenuBar(new MenuBar());
 		
 		this.setLayout(new BorderLayout());
 		this.add(getPanelPrincipal(), BorderLayout.CENTER);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
 	/**
@@ -46,13 +62,7 @@ private JTabbedPane jTabbedPane = null;
 		jTabbedPane = new JTabbedPane();
 		
 		jTabbedPane.add("Estudiantes", new PNLestudiantes());
-		jTabbedPane.add("Profesores", new PNLtalerdo());
-//		jTabbedPane.add("JScroolPane con imagen", new PaneForJScroolPane());
-//		jTabbedPane.add("Coches", new PanelCoches());
-//		jTabbedPane.add("Clientes", new PanelClientes());
-//		jTabbedPane.add("Concesionarios", new PanelConcesionarios());
-//		jTabbedPane.add("Ventas", new PanelVentas());
-		
+		jTabbedPane.add("Valoración de estudiantes", new PNLvaloraciones());
 		
 		return jTabbedPane;
 	}
@@ -76,6 +86,7 @@ private JTabbedPane jTabbedPane = null;
 	public static void main(String[] args) {
 		Principal.getInstance().setVisible(true);
 	}
+
 
 
 }

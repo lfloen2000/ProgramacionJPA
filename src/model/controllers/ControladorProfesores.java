@@ -1,43 +1,59 @@
 package model.controllers;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import model.Profesor;
 
 
+
 public class ControladorProfesores {
-	
-private static ControladorProfesores instance = null;
 	
 	EntityManagerFactory factory = Persistence.createEntityManagerFactory("CentroeducativoJPA");
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public static ControladorProfesores getInstance () {
-		if (instance == null) {
-			instance = new ControladorProfesores();
-		}
-		return instance;
-	}
-	
+	// instancia del singleton
+	private static ControladorProfesores instancia = null;
+
 	/**
 	 * 
 	 */
 	public ControladorProfesores() {
-		
-//		try {
-//			Class.forName("com.mysql.cj.jdbc.Driver");
-//			conn = (Connection) DriverManager.getConnection ("jdbc:mysql://localhost/centroeducativo?serverTimezone=UTC","educacion", "1234");
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}		   
+	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public static ControladorProfesores getInstancia() {
+		if (instancia == null) {
+			instancia = new ControladorProfesores();
+		}
+		return instancia;
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Profesor> findAll () {
+		List<Profesor> resultado = new ArrayList<Profesor>();
+		try {
+			EntityManager em = this.factory.createEntityManager();
+			Query q = em.createQuery("SELECT o FROM Profesor o", Profesor.class);
+			resultado = (List<Profesor>) q.getResultList();
+			em.close();
+			return resultado;
+		}
+		catch (NoResultException nrEx) {
+			return resultado;		}
 	}
 	
 	
@@ -131,5 +147,7 @@ private static ControladorProfesores instance = null;
 			return false;
 		}
 	}
+
+	
 
 }
